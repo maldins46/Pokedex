@@ -2,7 +2,7 @@ package it.riccardomaldini.Pokedex.rest;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import it.riccardomaldini.Pokedex.model.PokemonResponse;
+import it.riccardomaldini.Pokedex.rest.dto.PokemonResponse;
 import it.riccardomaldini.Pokedex.service.PokemonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

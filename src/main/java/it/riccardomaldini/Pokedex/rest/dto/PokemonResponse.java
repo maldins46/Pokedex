@@ -1,4 +1,4 @@
-package it.riccardomaldini.Pokedex.model;
+package it.riccardomaldini.Pokedex.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
