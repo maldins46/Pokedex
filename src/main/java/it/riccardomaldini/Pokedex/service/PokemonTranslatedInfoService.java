@@ -16,6 +16,29 @@ public class PokemonTranslatedInfoService implements PokemonInfoService {
 
     @Override
     public PokemonInfo getPokemonInfo(String name) {
-       throw new RuntimeException("To be implemented");
+        PokemonInfo pokemonInfo = decoratedBasicInfoService.getPokemonInfo(name);
+        pokemonInfo.setDescription(obtainTranslatedDescription(pokemonInfo));
+        return pokemonInfo;
+    }
+
+    private String obtainTranslatedDescription(PokemonInfo pokemonInfo) {
+        String description;
+
+        try {
+            FunTranslationsResponse translationsResponse = needsYodaDescription(pokemonInfo)
+                    ? translationsApiClient.fetchYodaTranslation(pokemonInfo.getDescription())
+                    : translationsApiClient.fetchShakespeareTranslation(pokemonInfo.getDescription());
+
+            description = translationsResponse.getContents().getTranslated();
+        
+        } catch (Exception e) {
+            description = pokemonInfo.getDescription();
+        }
+
+        return description;
+    }
+
+    private boolean needsYodaDescription(PokemonInfo pokemonInfo) {
+        return Objects.equals(pokemonInfo.getHabitat(), "cave") || pokemonInfo.isLegendary();
     }
 }
