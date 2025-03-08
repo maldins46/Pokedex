@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>it.riccardomaldini</groupId>
-	<artifactId>Pokedex</artifactId>
+	<artifactId>PokedexAPI</artifactId>
 	<version>1.0.0</version>
 	<name>Pokedex</name>
 	<description>Pokedex software engineering challenge</description>

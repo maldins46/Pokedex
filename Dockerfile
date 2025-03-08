@@ -4,7 +4,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy built JAR file into the container
-COPY target/pokedex-api-1.0.0.jar app.jar
+COPY target/PokedexAPI-1.0.0.jar app.jar
 
 # Expose port 8080
 EXPOSE 8080

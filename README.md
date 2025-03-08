@@ -1,11 +1,20 @@
 # Pokedex API
 
-A REST API that provides Pokémon information, part of a software engineering challenge.
+A REST API that provides Pokémon information as part of a software engineering challenge.
 
-# Prerequisites - Installing Dependencies
-If your machine does not have Java or Maven installed, follow these steps.
+## Features
+- Retrieve basic Pokémon information from the PokéAPI.
+- Get a translated description using FunTranslations (Yoda/Shakespeare styles).
+- Built with **Spring Boot (Java 17)**.
+- Uses **WebClient** for API calls.
+- Graceful error handling and timeout management.
+- Includes **Swagger UI** for API documentation.
 
-### 1. Install Java 17
+## Prerequisites - Installing Dependencies
+
+### 1. Java 17
+The application requires **Java 17** to be installed on your machine to build and run.
+
 #### **Windows**
 1. Download and install **Eclipse Temurin JDK 17** from [Adoptium](https://adoptium.net/temurin/releases/?version=17).
 2. Add Java to your system PATH (if not automatically configured).
@@ -14,8 +23,8 @@ If your machine does not have Java or Maven installed, follow these steps.
 java -version
 ```
 
-#### **macOS/Linux**
-1. Install Java via Homebrew (macOS/Linux):
+#### **MacOS/Linux**
+1. Install Java via Homebrew (MacOS/Linux):
 ```sh
 brew install openjdk@17
 ```
@@ -24,56 +33,53 @@ brew install openjdk@17
 java -version
 ```
 
-### 2. Install Maven (If Not Using the Wrapper)
-#### **Windows/macOS/Linux**
-- Download and install Maven from [Apache Maven](https://maven.apache.org/download.cgi).
-- Verify installation:
-```sh
-mvn -version
-```
-> **Note**: The project includes the Maven Wrapper (`mvnw`), so you **don't need to install Maven manually**.
+### 2. Maven
 
-### 3. Install Docker (Optional, for Containerized Deployment)
+**Maven** is also a prerequisite. However, the project includes the Maven Wrapper (`mvnw`), so you **don't need to install Maven manually**.
+
+### 3. Docker (optional)
+
+Docker is only required if you choose to deploy the application in a containerized environment. If needed, follow these steps:
+
 - Download and install Docker from [Docker Official Site](https://www.docker.com/get-started).
 - Verify installation:
 ```sh
 docker --version
 ```
 
-## Running the Application
-### 1. Clone the repository
+## Running the application
+### 1. Build the project
 ```sh
-git clone <repository-url>
-cd pokedex-api
-```
-
-### 2. Build the project
-#### Using Maven
-```sh
-mvn clean install
-```
-#### Using Maven Wrapper (Recommended)
-```sh
-./mvnw clean install  # macOS/Linux
+./mvnw clean install    # macOS/Linux
 mvnw.cmd clean install  # Windows
 ```
 
-### 3. Run the application
-#### Using Maven
+### 2. Run the application
 ```sh
-mvn spring-boot:run
-```
-#### Using Executable JAR
-```sh
-java -jar target/pokedex-api-1.0.0-SNAPSHOT.jar
+java -jar target/PokedexAPI-1.0.0.jar
 ```
 
-### 4. Access the API
-- **Base URL:** `http://localhost:8080`
-- **Swagger UI:** `http://localhost:8080/swagger-ui.html`
+## Running with Docker (optional)
 
-### 5. Example API Calls
-#### Get Basic Pokémon Information
+### 1. Package the project
+
+```sh
+./mvnw clean package    # macOS/Linux
+mvnw.cmd clean package  # Windows
+```
+
+### 2. Build the Docker image
+```sh
+docker build -t pokedex-api .
+```
+
+### 3. Run the container
+```sh
+docker run -p 8080:8080 pokedex-api
+```
+
+## Example API Calls
+### Get Basic Pokémon Information
 ```sh
 curl -X GET http://localhost:8080/pokemon/mewtwo
 ```
@@ -87,7 +93,7 @@ curl -X GET http://localhost:8080/pokemon/mewtwo
 }
 ```
 
-#### Get Translated Pokémon Description
+### Get Translated Pokémon Description
 ```sh
 curl -X GET http://localhost:8080/pokemon/translated/mewtwo
 ```
@@ -99,15 +105,4 @@ curl -X GET http://localhost:8080/pokemon/translated/mewtwo
   "habitat": "rare",
   "isLegendary": true
 }
-```
-
-## Running with Docker (Optional)
-### 1. Build the Docker Image
-```sh
-docker build -t pokedex-api .
-```
-
-### 2. Run the Container
-```sh
-docker run -p 8080:8080 pokedex-api
 ```
