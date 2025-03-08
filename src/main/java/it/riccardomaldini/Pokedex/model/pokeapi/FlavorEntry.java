@@ -1,5 +1,6 @@
 package it.riccardomaldini.Pokedex.model.pokeapi;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlavorEntry {
+    @JsonProperty("flavor_text")
     private String flavorText;
-    private Language language;
+
+    private Language language = new Language();
 }
