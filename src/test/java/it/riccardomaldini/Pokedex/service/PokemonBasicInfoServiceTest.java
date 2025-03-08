@@ -46,7 +46,7 @@ class PokemonBasicInfoServiceTest {
     }
 
     @Test
-    @DisplayName("Given an API response without a valid description field, when pokemon info is requested, verify a fallback description is given.")
+    @DisplayName("Given an API response without a valid description field, when pokemon info is requested, verify a fallback empty description is given.")
     void givenResponseWithoutValidDescriptionWhenInfoRequestedVerifyFallbackDescription() {
         Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i ->  {
             PokeApiResponse response = new PokeApiResponse();
@@ -56,11 +56,11 @@ class PokemonBasicInfoServiceTest {
 
         PokemonInfo actual = pokemonBasicInfoService.getPokemonInfo("mewtwo");
 
-        Assertions.assertEquals("No description available.", actual.getDescription(), "Description field is correctly populated");
+        Assertions.assertNull(actual.getDescription(), "Description field is correctly populated as empty");
     }
 
     @Test
-    @DisplayName("Given an API response without an english description field, when pokemon info is requested, verify a fallback description is given.")
+    @DisplayName("Given an API response without an english description field, when pokemon info is requested, verify a fallback empty description is given.")
     void givenResponseWithoutEnglishDescriptionWhenInfoRequestedVerifyFallbackDescription() {
         Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i ->  {
             PokeApiResponse response = new PokeApiResponse();
@@ -70,20 +70,30 @@ class PokemonBasicInfoServiceTest {
 
         PokemonInfo actual = pokemonBasicInfoService.getPokemonInfo("mewtwo");
 
-        Assertions.assertEquals("No description available.", actual.getDescription(), "Description field is correctly populated");
+        Assertions.assertNull(actual.getDescription(), "Description field is correctly populated as empty");
     }
 
     @Test
-    @DisplayName("Given an API response with invalid habitat field, when pokemon info is requested, verify a fallback value is given correctly.")
-    void givenApiResponseWithInvalidHabitatWhenInfoRequestedVerifyCorrectFallback() {
+    @DisplayName("Given an API response with description field that contains carriage return characters, when pokemon info is requested, verify characters are correctly replaced with space.")
+    void givenResponseWithReturnCharactersDescriptionWhenInfoRequestedVerifyReturnCharactersRemoved() {
         Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i ->  {
             PokeApiResponse response = new PokeApiResponse();
-            response.setHabitat(null);
+            response.setFlavorTextEntries(List.of(new FlavorEntry("description\n\fdescription", new Language("en"))));
             return response;
         });
 
         PokemonInfo actual = pokemonBasicInfoService.getPokemonInfo("mewtwo");
 
-        Assertions.assertEquals("unknown", actual.getHabitat(), "Habitat is correctly populated");
+        Assertions.assertEquals("description  description", actual.getDescription(), "Description field is correctly populated without carriage returns");
+    }
+
+    @Test
+    @DisplayName("Given an API response with invalid habitat field, when pokemon info is requested, verify a fallback empty value is given correctly.")
+    void givenApiResponseWithInvalidHabitatWhenInfoRequestedVerifyCorrectFallback() {
+        Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i -> new PokeApiResponse());
+
+        PokemonInfo actual = pokemonBasicInfoService.getPokemonInfo("mewtwo");
+
+        Assertions.assertNull(actual.getHabitat(), "Habitat empty value is correctly populated");
     }
 }

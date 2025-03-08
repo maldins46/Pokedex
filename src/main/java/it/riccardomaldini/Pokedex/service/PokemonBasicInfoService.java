@@ -5,6 +5,7 @@ import it.riccardomaldini.Pokedex.model.pokeapi.PokeApiResponse;
 import it.riccardomaldini.Pokedex.web.rest.dto.PokemonInfo;
 import it.riccardomaldini.Pokedex.service.clients.PokeApiClient;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,11 @@ public class PokemonBasicInfoService implements PokemonInfoService {
     }
 
     private PokemonInfo obtainPokemonInfo(PokeApiResponse apiResponse) {
-        String habitat = obtainHabitat(apiResponse);
-        String description = obtainDescription(apiResponse);
-
-        return new PokemonInfo(apiResponse.getName(), description, habitat, apiResponse.isLegendary());
+        return new PokemonInfo(
+                apiResponse.getName(),
+                obtainDescription(apiResponse),
+                    apiResponse.getHabitat().getName(),
+                apiResponse.isLegendary());
     }
 
     private String obtainDescription(PokeApiResponse apiResponse) {
@@ -31,10 +33,7 @@ public class PokemonBasicInfoService implements PokemonInfoService {
                 .filter(entry -> "en".equals(entry.getLanguage().getName()))
                 .findFirst()
                 .map(FlavorEntry::getFlavorText)
-                .orElse("No description available.");
-    }
-
-    private String obtainHabitat(PokeApiResponse apiResponse) {
-        return apiResponse.getHabitat() != null ? apiResponse.getHabitat().getName() : "unknown";
+                .map(x -> x.replace("\n", " ").replace("\f", " "))
+                .orElse(null);
     }
 }
