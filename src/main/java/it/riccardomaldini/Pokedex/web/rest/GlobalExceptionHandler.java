@@ -1,5 +1,6 @@
 package it.riccardomaldini.Pokedex.web.rest;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import it.riccardomaldini.Pokedex.exceptions.ExternalApiException;
 import it.riccardomaldini.Pokedex.exceptions.PokemonNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
+@Hidden
 @RestControllerAdvice
 @Slf4j
 class GlobalExceptionHandler {
