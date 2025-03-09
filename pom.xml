@@ -13,19 +13,22 @@
 	<version>1.0.0</version>
 	<name>Pokedex</name>
 	<description>Pokedex software engineering challenge</description>
-	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
 	</licenses>
 	<developers>
+		<developer>
+			<name>Riccardo Maldini</name>
+			<email>riccardo.maldini@gmail.com</email>
+			<url>https://www.riccardomaldini.it</url>
+		</developer>
 		<developer/>
 	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
