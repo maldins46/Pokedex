@@ -60,6 +60,23 @@ class PokemonBasicInfoServiceTest {
     }
 
     @Test
+    @DisplayName("Given a valid API response with multiple valid flavor entries, when pokemon info is requested, verify the response contain one of the valid entries.")
+    void givenApiResponseMultipleFlavorsWhenInfoRequestedVerifyAnyValueIsRetuened() {
+        Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i ->  {
+            PokeApiResponse response = new PokeApiResponse();
+            response.setFlavorTextEntries(List.of(new FlavorEntry("description1", new Language("en"))));
+            response.setFlavorTextEntries(List.of(new FlavorEntry("description2", new Language("en"))));
+            response.setFlavorTextEntries(List.of(new FlavorEntry("description3", new Language("en"))));
+            return response;
+        });
+
+        PokemonInfo actual = pokemonBasicInfoService.getPokemonInfo("mewtwo");
+
+        Assertions.assertTrue(List.of("description1", "description2", "description3").contains(actual.getDescription()), "Description field is correctly populated");
+    }
+
+
+    @Test
     @DisplayName("Given an API response without an english description field, when pokemon info is requested, verify a fallback empty description is given.")
     void givenResponseWithoutEnglishDescriptionWhenInfoRequestedVerifyFallbackDescription() {
         Mockito.when(mockPokeApiClient.fetchPokemon("mewtwo")).thenAnswer(i ->  {
