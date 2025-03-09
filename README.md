@@ -4,15 +4,7 @@
 ![GitHub License](https://img.shields.io/github/license/maldins46/PokedexApi?logo=apache&label=License)
 ![GitHub top language](https://img.shields.io/github/languages/top/maldins46/PokedexApi)
 
-A REST API that provides Pokémon information as part of a software engineering challenge.
-
-## Features
-- Retrieve basic Pokémon information from the PokéAPI.
-- Get a translated description using FunTranslations (Yoda/Shakespeare styles).
-- Built with **Spring Boot (Java 17)**.
-- Uses **WebClient** for API calls.
-- Graceful error handling and timeout management.
-- Includes **Swagger UI** for API documentation.
+A REST API, built on Java Spring Boot, that provides Pokémon information as part of a software engineering challenge.
 
 ## Prerequisites - Installing Dependencies
 
